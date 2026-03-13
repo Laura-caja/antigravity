@@ -1,0 +1,20 @@
+# Ambientes virtuales
+.myenv/
+env/
+venv/
+ENV/
+
+# Python
+__pycache__/
+*.py[cod]
+*.so
+.Python
+
+
+# Archivos de configuración local
+.vscode/
+.idea/
+
+# Archivos temporales
+*.log
+*.tmp
