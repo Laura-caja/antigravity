@@ -7,7 +7,9 @@ import os
 import random
 from math import radians, cos, sin, sqrt, pi
 
+
 app = FastAPI()
+
 
 # Configurar CORS
 app.add_middleware(
@@ -18,14 +20,17 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+
 print("=" * 60)
 print("CARGANDO DATOS DE BARRIOS UNIDOS")
 print("=" * 60)
+
 
 # Rutas de los archivos
 RUTA_DATOS = os.path.join(os.path.dirname(os.path.dirname(__file__)), "datos")
 RUTA_LOCALIDAD = os.path.join(RUTA_DATOS, "GeoJSON.json")
 RUTA_ESTACIONES = os.path.join(RUTA_DATOS, "paradero_zonal.geojson")
+
 
 # Variable global para almacenar los datos
 localidad_data = None
@@ -33,6 +38,7 @@ estaciones_data = None
 gdf_localidad = None
 gdf_estaciones = None
 puntos_interes = []
+
 
 # Cargar localidad (Barrios Unidos)
 try:
@@ -42,7 +48,7 @@ try:
         print(f"✅ Localidad cargada: {RUTA_LOCALIDAD}")
         print(f"   Número de polígonos: {len(gdf_localidad)}")
         print(f"   Columnas: {list(gdf_localidad.columns)}")
-        
+       
         # Verificar si tiene nombre
         if 'nombre' in gdf_localidad.columns:
             nombres = gdf_localidad['nombre'].unique()
@@ -56,6 +62,7 @@ try:
 except Exception as e:
     print(f"❌ Error cargando localidad: {e}")
 
+
 # Cargar estaciones
 try:
     if os.path.exists(RUTA_ESTACIONES):
@@ -64,7 +71,7 @@ try:
         print(f"\n✅ Estaciones cargadas: {RUTA_ESTACIONES}")
         print(f"   Total estaciones: {len(gdf_estaciones)}")
         print(f"   Columnas: {list(gdf_estaciones.columns)}")
-        
+       
         # Filtrar estaciones de Barrios Unidos si es posible
         estaciones_barrios = []
         for idx, row in gdf_estaciones.iterrows():
@@ -73,7 +80,7 @@ try:
                     estaciones_barrios.append(row)
             else:
                 estaciones_barrios.append(row)
-        
+       
         if estaciones_barrios:
             print(f"   Estaciones en Barrios Unidos: {len(estaciones_barrios)}")
             gdf_estaciones_filtrado = gpd.GeoDataFrame(estaciones_barrios)
@@ -87,6 +94,7 @@ except Exception as e:
     print(f"❌ Error cargando estaciones: {e}")
     gdf_estaciones_filtrado = None
 
+
 # Generar puntos de interés alrededor de las estaciones
 if gdf_estaciones_filtrado is not None and len(gdf_estaciones_filtrado) > 0:
     print("\n🔄 Generando puntos de interés...")
@@ -95,10 +103,10 @@ if gdf_estaciones_filtrado is not None and len(gdf_estaciones_filtrado) > 0:
             for i in range(random.randint(1, 3)):  # 1-3 puntos por estación
                 angulo = random.uniform(0, 2 * pi)
                 distancia = random.uniform(20, 80) / 111000  # 20-80 metros
-                
+               
                 dlat = distancia * cos(angulo)
                 dlon = distancia * sin(angulo) / cos(radians(estacion.geometry.y))
-                
+               
                 puntos_interes.append({
                     'id': len(puntos_interes),
                     'nombre': f"{random.choice(['Bar', 'Restaurante', 'Café', 'Empanadas'])} {idx}-{i}",
@@ -112,6 +120,7 @@ if gdf_estaciones_filtrado is not None and len(gdf_estaciones_filtrado) > 0:
 else:
     print("⚠️ No se generaron puntos de interés")
 
+
 print("\n" + "=" * 60)
 print("✅ SERVIDOR LISTO")
 print(f"📍 Localidad: Barrios Unidos")
@@ -119,9 +128,11 @@ print(f"🚏 Estaciones: {len(gdf_estaciones_filtrado) if gdf_estaciones_filtrad
 print(f"🍔 Puntos de interés: {len(puntos_interes)}")
 print("=" * 60)
 
+
 def calcular_distancia(lon1, lat1, lon2, lat2):
     """Distancia aproximada en metros"""
     return sqrt((lon2-lon1)**2 + (lat2-lat1)**2) * 111000
+
 
 @app.get("/")
 def read_root():
@@ -132,6 +143,7 @@ def read_root():
         "puntos_interes": len(puntos_interes)
     }
 
+
 @app.get("/api/localidades")
 def get_localidades():
     """Lista de localidades (solo Barrios Unidos)"""
@@ -141,6 +153,7 @@ def get_localidades():
         "area": 12.5,
         "poblacion": 250000
     }]
+
 
 @app.get("/api/localidades/{nombre}")
 def get_localidad_info(nombre: str):
@@ -155,7 +168,7 @@ def get_localidad_info(nombre: str):
                 "codigo": row.get('codigo', f'COD-{idx}'),
                 "direccion": row.get('direccion', 'Dirección no disponible')
             })
-    
+   
     return {
         "id": 1,
         "nombre": "Barrios Unidos",
@@ -163,6 +176,7 @@ def get_localidad_info(nombre: str):
         "poblacion": 250000,
         "estaciones": estaciones_lista
     }
+
 
 @app.get("/api/localidades")
 def get_localidades():
@@ -175,6 +189,7 @@ def get_localidades():
         "poblacion": 250000
     }]
 
+
 @app.get("/api/geojson/estaciones/{localidad}")
 def get_estaciones_geojson(localidad: str):
     """GeoJSON de estaciones"""
@@ -182,6 +197,7 @@ def get_estaciones_geojson(localidad: str):
         return json.loads(gdf_estaciones_filtrado.to_json())
     else:
         return {"type": "FeatureCollection", "features": []}
+
 
 @app.get("/api/estaciones")
 def get_todas_estaciones():
@@ -196,6 +212,7 @@ def get_todas_estaciones():
                 "localidad": "Barrios Unidos"
             })
     return estaciones_lista
+
 
 @app.get("/api/puntos_interes")
 def get_puntos_interes():
@@ -217,22 +234,23 @@ def get_puntos_interes():
         })
     return {"type": "FeatureCollection", "features": features}
 
+
 @app.get("/api/analisis/estacion/{estacion_id}")
 def analizar_estacion(estacion_id: int, buffer_metros: int = 100):
     """Analizar estación específica"""
     if gdf_estaciones_filtrado is None or estacion_id >= len(gdf_estaciones_filtrado):
         raise HTTPException(status_code=404, detail="Estación no encontrada")
-    
+   
     estacion = gdf_estaciones_filtrado.iloc[estacion_id]
-    
+   
     if not hasattr(estacion.geometry, 'x'):
         raise HTTPException(status_code=400, detail="Estación sin geometría válida")
-    
+   
     # Buscar puntos dentro del buffer
     bares = 0
     empanadas = 0
     puntos_encontrados = []
-    
+   
     for punto in puntos_interes:
         dist = calcular_distancia(
             estacion.geometry.x, estacion.geometry.y,
@@ -244,7 +262,7 @@ def analizar_estacion(estacion_id: int, buffer_metros: int = 100):
                 bares += 1
             else:
                 empanadas += 1
-    
+   
     # Crear círculo del buffer
     circulo = []
     for i in range(37):
@@ -253,7 +271,7 @@ def analizar_estacion(estacion_id: int, buffer_metros: int = 100):
         dlat = radio_grados * cos(angulo)
         dlon = radio_grados * sin(angulo) / cos(radians(estacion.geometry.y))
         circulo.append([estacion.geometry.x + dlon, estacion.geometry.y + dlat])
-    
+   
     return {
         "estacion": {
             "id": estacion_id,
