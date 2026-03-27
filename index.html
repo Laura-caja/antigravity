@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Barrios Unidos - SITP</title>
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <!-- Tu CSS -->
+    <link rel="stylesheet" href="estilos.css">
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+    <style>
+        #map {
+            height: 100vh;
+            width: 100%;
+        }
+    
+    </style>
+</head>
+<body>
+    <div class="container" style="display: flex; height: 100vh;">
+        <div class="sidebar" style="width: 350px; background: white; padding: 20px; overflow-y: auto;">
+            <h2>🚌 Barrios Unidos - SITP</h2>
+            
+            <div class="selectores">
+                <label for="localidad-select">📍 Localidad:</label>
+                <select id="localidad-select">
+                    <option value="Barrios Unidos">Barrios Unidos</option>
+                </select>
+            </div>
+
+            <div id="info-panel" class="info-panel" style="margin-top: 20px;">
+                <h3>📋 Información</h3>
+                <div id="localidad-info">
+                    <p>Cargando información...</p>
+                </div>
+                
+                <h4>🚉 Estaciones</h4>
+                <div id="estaciones-lista">
+                    <p>Cargando estaciones...</p>
+                </div>
+            </div>
+
+            <div class="analisis-panel" style="margin-top: 20px;">
+                <h3>📊 Analizar Estación</h3>
+                <select id="estacion-analisis" style="width: 100%; padding: 8px; margin: 10px 0;">
+                    <option value="">Seleccione una estación</option>
+                </select>
+                
+                <button id="btn-analizar" style="width: 100%; padding: 10px; background: #27ae60; color: white; border: none; border-radius: 5px; cursor: pointer;">
+                    🔍 Analizar
+                </button>
+                
+                <div id="resultado-analisis" style="margin-top: 15px;"></div>
+            </div>
+        </div>
+
+        <div class="map-container" style="flex: 1; position: relative;">
+            <div id="map"></div>
+            <div class="layer-control" style="position: absolute; top: 20px; right: 20px; background: white; padding: 15px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.2);">
+                <h4>🗺️ Capas</h4>
+                <label><input type="checkbox" id="layer-localidad" checked> 🏘️ Localidad</label><br>
+                <label><input type="checkbox" id="layer-estaciones" checked> 🚏 Estaciones</label><br>
+                <label><input type="checkbox" id="layer-puntos-interes" checked> 🍔 Puntos</label><br>
+                <label><input type="checkbox" id="layer-buffer" checked> ⭕ Buffer</label>
+            </div>
+        </div>
+    </div>
+
+    <!-- Leaflet JS -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <!-- Tu JS -->
+    <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,338 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f0f2f5;
+    height: 100vh;
+    overflow: hidden;
+}
+
+.container {
+    display: flex;
+    height: 100vh;
+    width: 100vw;
+}
+
+.sidebar {
+    width: 380px;
+    background-color: white;
+    box-shadow: 2px 0 10px rgba(0,0,0,0.1);
+    padding: 20px;
+    overflow-y: auto;
+    z-index: 1000;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.sidebar h2 {
+    color: #2c3e50;
+    margin-bottom: 5px;
+    padding-bottom: 10px;
+    border-bottom: 3px solid #3498db;
+    font-size: 1.4rem;
+}
+
+.selectores {
+    background-color: #f8f9fa;
+    padding: 15px;
+    border-radius: 10px;
+    border: 1px solid #e0e0e0;
+}
+
+.selectores label {
+    display: block;
+    margin-bottom: 8px;
+    color: #2c3e50;
+    font-weight: 600;
+    font-size: 0.95rem;
+}
+
+.selectores select {
+    width: 100%;
+    padding: 10px 12px;
+    border: 2px solid #e0e0e0;
+    border-radius: 8px;
+    font-size: 14px;
+    background-color: white;
+    cursor: pointer;
+    transition: border-color 0.3s;
+}
+
+.selectores select:hover {
+    border-color: #3498db;
+}
+
+.selectores select:focus {
+    outline: none;
+    border-color: #3498db;
+    box-shadow: 0 0 0 3px rgba(52,152,219,0.1);
+}
+
+.info-panel {
+    background-color: #f8f9fa;
+    border-radius: 10px;
+    padding: 15px;
+    border-left: 5px solid #3498db;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+
+.info-panel h3 {
+    color: #2c3e50;
+    margin-bottom: 15px;
+    font-size: 1.2rem;
+}
+
+.info-panel h4 {
+    color: #2c3e50;
+    margin: 20px 0 10px 0;
+    font-size: 1.1rem;
+    border-bottom: 2px solid #e0e0e0;
+    padding-bottom: 5px;
+}
+
+#localidad-info {
+    background-color: white;
+    padding: 12px;
+    border-radius: 8px;
+    margin-bottom: 10px;
+}
+
+#localidad-info p {
+    margin: 8px 0;
+    color: #34495e;
+    font-size: 0.95rem;
+}
+
+#localidad-info strong {
+    color: #2c3e50;
+    font-weight: 600;
+}
+
+#estaciones-lista {
+    max-height: 200px;
+    overflow-y: auto;
+    background-color: white;
+    border-radius: 8px;
+    padding: 5px;
+}
+
+.estacion-item {
+    padding: 10px;
+    margin: 5px 0;
+    background-color: #f8f9fa;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.2s;
+    border: 1px solid #e0e0e0;
+}
+
+.estacion-item:hover {
+    background-color: #e8f4fd;
+    border-color: #3498db;
+    transform: translateX(3px);
+}
+
+.estacion-item a {
+    color: #2c3e50;
+    text-decoration: none;
+    display: block;
+    font-weight: 500;
+}
+
+.estacion-item a:hover {
+    color: #3498db;
+}
+
+.analisis-panel {
+    background-color: #f8f9fa;
+    border-radius: 10px;
+    padding: 15px;
+    border-left: 5px solid #27ae60;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+
+.analisis-panel h3 {
+    color: #2c3e50;
+    margin-bottom: 15px;
+    font-size: 1.2rem;
+}
+
+.analisis-panel label {
+    display: block;
+    margin-bottom: 8px;
+    color: #2c3e50;
+    font-weight: 600;
+    font-size: 0.95rem;
+}
+
+.analisis-panel select {
+    width: 100%;
+    padding: 10px 12px;
+    border: 2px solid #e0e0e0;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    background-color: white;
+    cursor: pointer;
+}
+
+.analisis-panel select:hover {
+    border-color: #27ae60;
+}
+
+.btn {
+    background-color: #27ae60;
+    color: white;
+    border: none;
+    padding: 12px 15px;
+    border-radius: 8px;
+    cursor: pointer;
+    width: 100%;
+    font-size: 16px;
+    font-weight: 600;
+    transition: all 0.3s;
+    margin-bottom: 15px;
+}
+
+.btn:hover {
+    background-color: #219a52;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(39,174,96,0.2);
+}
+
+#resultado-analisis {
+    background-color: white;
+    border-radius: 8px;
+    padding: 15px;
+    font-size: 14px;
+}
+
+#resultado-analisis h4 {
+    color: #27ae60;
+    margin-bottom: 12px;
+    font-size: 1rem;
+    border-bottom: 1px solid #e0e0e0;
+    padding-bottom: 5px;
+}
+
+.estadistica {
+    display: flex;
+    justify-content: space-between;
+    margin: 8px 0;
+    padding: 8px 12px;
+    background-color: #f8f9fa;
+    border-radius: 6px;
+    font-weight: 500;
+}
+
+.estadistica span {
+    color: #7f8c8d;
+}
+
+.estadistica strong {
+    color: #2c3e50;
+    font-size: 1.1rem;
+}
+
+.placeholder {
+    color: #95a5a6;
+    font-style: italic;
+    text-align: center;
+    padding: 10px;
+}
+
+.map-container {
+    flex: 1;
+    position: relative;
+}
+
+#map {
+    height: 100%;
+    width: 100%;
+    z-index: 1;
+}
+
+.layer-control {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background-color: white;
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+    z-index: 1000;
+    min-width: 180px;
+    border: 1px solid #e0e0e0;
+}
+
+.layer-control h4 {
+    margin-bottom: 12px;
+    color: #2c3e50;
+    font-size: 1rem;
+    border-bottom: 2px solid #3498db;
+    padding-bottom: 5px;
+}
+
+.layer-control label {
+    display: block;
+    margin: 8px 0;
+    color: #34495e;
+    cursor: pointer;
+    font-size: 0.95rem;
+}
+
+.layer-control input[type="checkbox"] {
+    margin-right: 8px;
+    cursor: pointer;
+    accent-color: #3498db;
+}
+
+/* Estilos para marcadores personalizados */
+.estacion-marker {
+    background-color: #3498db;
+    border-radius: 50%;
+    color: white;
+    text-align: center;
+    font-size: 16px;
+    line-height: 30px;
+    width: 30px;
+    height: 30px;
+    border: 2px solid white;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+
+.poi-marker {
+    background-color: #e74c3c;
+    border-radius: 50%;
+    color: white;
+    text-align: center;
+    font-size: 16px;
+    line-height: 30px;
+    width: 30px;
+    height: 30px;
+    border: 2px solid white;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+
+/* Scrollbar personalizada */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #b0b0b0;
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #888;
+}
